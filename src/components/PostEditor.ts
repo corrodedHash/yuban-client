@@ -38,7 +38,6 @@ export default defineComponent({
             this.orig_text = undefined
             this.text = ""
             if (this.corrid !== undefined && this.postid !== undefined) {
-                console.log("correction")
                 let me = this
                 get_post(this.postid).then((post) => {
                     me.orig_text = post.text
@@ -75,7 +74,6 @@ export default defineComponent({
                 add_post(this.text, this.threadid, langcode).catch(() => console.warn("Could not post"))
             } else if (this.corrid === null && this.postid !== undefined) {
                 add_correction(this.text, this.postid).catch(() => console.warn("Could not post"))
-                console.log("Adding correction")
             }
         },
     },

@@ -29,10 +29,6 @@ export default defineComponent({
         },
 
         checkToken() {
-            if (document.cookie.indexOf("token=") == -1) {
-                this.checkedToken = true
-                return;
-            }
             check_token().then(this.handleLoginPromise.bind(this)).catch(() => {
                 this.checkedToken = true;
             })

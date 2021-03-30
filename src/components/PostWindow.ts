@@ -16,8 +16,6 @@ export default defineComponent({
             this.$router.push({ name: "Menu" })
         },
         handleLogout() {
-            document.cookie = "token=;expires=Thu, 01-Jan-1970 00:00:00 GMT"
-            document.cookie = "username=;expires=Thu, 01-Jan-1970 00:00:00 GMT"
             this.$emit('logout')
         },
         handleCorrectionSwitch(thread_id: number, post_id: number, correction: number | null) {

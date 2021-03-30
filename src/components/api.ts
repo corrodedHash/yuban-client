@@ -61,7 +61,7 @@ export function check_login(username: string, password: string): Promise<boolean
             username: username,
             password: password,
         });
-        loginreq.open("POST", `${API_ROOT}/logindata`, true);
+        loginreq.open("POST", `${API_ROOT}/login`, true);
         loginreq.send(json_data);
     })
 }
@@ -104,13 +104,18 @@ export function check_token(): Promise<boolean> {
 export function get_posts(): Promise<ThreadSummary[]> {
     return new Promise((resolve, reject) => {
         let postreq = new XMLHttpRequest();
+        postreq.responseType = "json"
         postreq.onload = (ev) => {
             if (postreq.status === 200) {
-                let x = JSON.parse(postreq.responseText) as any[];
+                let x = postreq.response as any[];
+
                 let threads: ThreadSummary[] = x.map(thread => {
-                    thread.posts = JSON.parse(thread.posts)
                     let modified_thread = thread as ThreadSummary
+                    console.assert(typeof (modified_thread.posts) == "string")
+                    modified_thread.posts = JSON.parse("[" + modified_thread.posts as unknown as string + "]")
                     modified_thread.posts = modified_thread.posts.map(post => {
+                        console.assert(typeof (post.corrections) == "string")
+                        post.corrections = JSON.parse(post.corrections as unknown as string)
                         if (post.corrections.length === 1 && post.corrections[0] === null) {
                             post.corrections = []
                         }
