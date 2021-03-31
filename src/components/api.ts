@@ -33,6 +33,7 @@ export interface Post {
 }
 
 const API_ROOT = "/api"
+const ADMIN_API_ROOT = "/api/admin"
 
 export function check_login(username: string, password: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -206,5 +207,57 @@ export function add_correction(post: string, orig_id: number): Promise<void> {
         }
         postreq.open("PUT", `${API_ROOT}/addcorrection/${orig_id}`, true);
         postreq.send(post);
+    })
+}
+
+export function list_users(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        let postreq = new XMLHttpRequest();
+        postreq.responseType = "json"
+        postreq.onload = () => {
+            resolve(postreq.response)
+        }
+        postreq.onerror = () => {
+            reject()
+        }
+        postreq.onabort = () => {
+            reject()
+        }
+        postreq.open("GET", `${ADMIN_API_ROOT}/users`, true);
+        postreq.send();
+    })
+}
+
+export function remove_user(username: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        let postreq = new XMLHttpRequest();
+        postreq.onload = () => {
+            resolve()
+        }
+        postreq.onerror = () => {
+            reject()
+        }
+        postreq.onabort = () => {
+            reject()
+        }
+        postreq.open("DELETE", `${ADMIN_API_ROOT}/login`, true);
+        postreq.send(JSON.stringify({ username }));
+    })
+}
+
+export function add_user(username: string, password: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        let postreq = new XMLHttpRequest();
+        postreq.onload = () => {
+            resolve()
+        }
+        postreq.onerror = () => {
+            reject()
+        }
+        postreq.onabort = () => {
+            reject()
+        }
+        postreq.open("PUT", `${ADMIN_API_ROOT}/login`, true);
+        postreq.send(JSON.stringify({ username, password }));
     })
 }

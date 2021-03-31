@@ -7,8 +7,17 @@
       element-loading-spinner="el-icon-loading"
     >
       <form action="logindata" method="POST" @submit.prevent="login">
-        <input type="text" name="username" v-model="username" /><br />
-        <input type="password" name="password" v-model="password" /><br />
+        <el-input
+          placeholder="Username"
+          v-model="username"
+          size="small"
+        ></el-input>
+        <el-input
+          placeholder="Password"
+          v-model="password"
+          size="small"
+          show-password
+        ></el-input>
         <input type="submit" value="Submit" />
       </form>
     </div>

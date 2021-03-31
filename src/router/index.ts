@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import PostEditor from '@/components/PostEditor.vue'
 import PostListActor from '@/components/PostListActor.vue'
+import AdminPanel from '@/components/AdminPanel.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -37,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/r/menu',
     name: 'Menu',
     component: PostListActor,
+  },
+  {
+    path: '/r/admin',
+    name: 'Admin',
+    component: AdminPanel,
   },
 ]
 
