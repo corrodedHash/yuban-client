@@ -69,11 +69,23 @@ export default defineComponent({
             }
             let langcode = (this.$refs.langcode as any).value
             if (this.threadid === undefined && this.corrid === undefined) {
-                new_post(this.text, langcode).catch(() => console.warn("Could not post"))
+                new_post(this.text, langcode)
+                    .then(ids => {
+                        this.$router.push({ name: 'View', params: { postid: ids.post_id } })
+                    })
+                    .catch(() => console.warn("Could not post"))
             } else if (this.postid === undefined && this.threadid !== undefined) {
-                add_post(this.text, this.threadid, langcode).catch(() => console.warn("Could not post"))
+                add_post(this.text, this.threadid, langcode)
+                    .then(id => {
+                        this.$router.push({ name: 'View', params: { postid: id } })
+                    })
+                    .catch(() => console.warn("Could not post"))
             } else if (this.corrid === null && this.postid !== undefined) {
-                add_correction(this.text, this.postid).catch(() => console.warn("Could not post"))
+                let postid = this.postid;
+                add_correction(this.text, this.postid)
+                    .then(corrid => {
+                        this.$router.push({ name: 'Correction', params: { postid, corrid } })
+                    }).catch(() => console.warn("Could not post"))
             }
         },
     },

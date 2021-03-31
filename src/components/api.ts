@@ -35,6 +35,32 @@ export interface Post {
 const API_ROOT = "/api"
 const ADMIN_API_ROOT = "/api/admin"
 
+export function logout(): Promise<void> {
+    return new Promise((resolve, reject) => {
+        let loginreq = new XMLHttpRequest();
+        loginreq.onload = (ev) => {
+            switch (loginreq.status) {
+                case 200:
+                    resolve()
+                    return;
+                default:
+                    console.warn("Unknown status", loginreq.status, loginreq.response)
+                    reject()
+            }
+        };
+        loginreq.onerror = (ev) => {
+            console.warn("Error logout", ev)
+            reject()
+        }
+        loginreq.onabort = (ev) => {
+            console.warn("Abort logout", ev)
+            reject()
+        }
+        loginreq.open("POST", `${API_ROOT}/logout`, true);
+        loginreq.send();
+    })
+}
+
 export function check_login(username: string, password: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
         let loginreq = new XMLHttpRequest();
@@ -160,11 +186,12 @@ export function get_post(post_id: number): Promise<Post> {
     })
 }
 
-export function new_post(post: string, langcode: string): Promise<void> {
+export function new_post(post: string, langcode: string): Promise<{ thread_id: number, post_id: number }> {
     return new Promise((resolve, reject) => {
         let postreq = new XMLHttpRequest();
+        postreq.responseType = "json"
         postreq.onload = () => {
-            resolve()
+            resolve(postreq.response)
         }
         postreq.onerror = () => {
             reject()
@@ -177,11 +204,13 @@ export function new_post(post: string, langcode: string): Promise<void> {
     })
 }
 
-export function add_post(post: string, thread_id: number, langcode: string): Promise<void> {
+export function add_post(post: string, thread_id: number, langcode: string): Promise<number> {
     return new Promise((resolve, reject) => {
         let postreq = new XMLHttpRequest();
+        postreq.responseType = "json"
         postreq.onload = () => {
-            resolve()
+            console.assert(typeof (postreq.response) == "number")
+            resolve(postreq.response)
         }
         postreq.onerror = () => {
             reject()
@@ -193,11 +222,12 @@ export function add_post(post: string, thread_id: number, langcode: string): Pro
         postreq.send(post);
     })
 }
-export function add_correction(post: string, orig_id: number): Promise<void> {
+export function add_correction(post: string, orig_id: number): Promise<number> {
     return new Promise((resolve, reject) => {
         let postreq = new XMLHttpRequest();
         postreq.onload = () => {
-            resolve()
+            console.assert(typeof (postreq.response) == "number")
+            resolve(postreq.response)
         }
         postreq.onerror = () => {
             reject()

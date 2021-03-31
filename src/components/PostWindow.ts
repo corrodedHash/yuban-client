@@ -2,7 +2,7 @@
 import { defineComponent } from "vue";
 import PostEditor from "@/components/PostEditor.vue";
 import PostList from "@/components/PostList.vue";
-
+import { logout } from "@/components/api";
 export default defineComponent({
     name: "PostWindow",
     components: { PostList, PostEditor },
@@ -16,7 +16,11 @@ export default defineComponent({
             this.$router.push({ name: "Menu" })
         },
         handleLogout() {
-            this.$emit('logout')
+            logout().then(
+                () => this.$emit('logout')
+            ).catch(() => {
+                console.log("Could not logout")
+            })
         },
         handleCorrectionSwitch(thread_id: number, post_id: number, correction: number | null) {
             if (correction !== null) {
