@@ -1,5 +1,5 @@
 <template>
-  <post-list
+  <group-list
     @select-post="handlePostSwitch"
     @select-correction="handleCorrectionSwitch"
   />
@@ -7,10 +7,10 @@
 
 <script lang="ts" >
 import { defineComponent } from "vue";
-import PostList from "./PostList.vue";
+import GroupList from "./GroupList.vue";
 export default defineComponent({
-  name: "PostListActor",
-  components: { PostList },
+  name: "GroupListActor",
+  components: { GroupList },
   methods: {
     handleCorrectionSwitch(
       thread_id: number,

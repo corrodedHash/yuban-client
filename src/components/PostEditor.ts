@@ -1,6 +1,6 @@
 
 import { defineComponent, PropType } from "vue";
-import { new_post, get_post, add_post, add_correction } from "@/components/api";
+import { new_post, get_post, add_post, add_correction } from "@/api/api";
 import PostDiff from "@/components/PostDiff.vue";
 
 export default defineComponent({

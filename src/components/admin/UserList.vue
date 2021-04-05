@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script lang="ts" src="./AdminPanel.ts"/>
+<script lang="ts" src="./UserList.ts"/>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

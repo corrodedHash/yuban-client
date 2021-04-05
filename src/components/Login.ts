@@ -1,6 +1,6 @@
 
 import { defineComponent } from "vue";
-import { check_token, check_login } from "./api";
+import { check_token, check_login } from "@/api/api";
 export default defineComponent({
     name: "Login",
     emits: {
