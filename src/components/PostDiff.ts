@@ -10,6 +10,9 @@ export default defineComponent({
             type: Number,
         },
     },
+    data() {
+        return { original: '', correction: '', language: '' }
+    },
     mounted() {
         this.getPosts()
     },
@@ -29,6 +32,7 @@ export default defineComponent({
         },
         getPosts() {
             get_post(this.originalID).then(v => {
+                this.language = v.langcode
                 this.original = v.text
                 if (this.isEditable) {
                     this.correction = v.text
@@ -40,8 +44,5 @@ export default defineComponent({
                 })
             }
         },
-    },
-    data() {
-        return { original: '', correction: '' }
     },
 })

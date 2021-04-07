@@ -1,6 +1,6 @@
 <template>
     <div>
-        <post-diff-display :original="original" :correction="correction" />
+        <post-diff-display :original="original" :correction="correction" :lang="language"/>
         <div v-if="isEditable">
             <textarea class="editor" v-model="correction"></textarea><br />
             <el-button type="primary" icon="el-icon-check" @click="handleSubmit"

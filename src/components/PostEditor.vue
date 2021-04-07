@@ -22,5 +22,6 @@
 .editor {
     resize: none;
     width: 100%;
+    min-height: 10em;
 }
 </style>
