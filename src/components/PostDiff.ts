@@ -1,23 +1,47 @@
-
-import { defineComponent, PropType } from "vue";
-import { diffWords } from "diff";
-
-
+import { defineComponent, PropType } from 'vue'
+import PostDiffDisplay from './PostDiffDisplay.vue'
+import { get_post, add_correction } from '@/api/api'
 export default defineComponent({
-    name: "PostDiff",
+    name: 'PostDiff',
+    components: { PostDiffDisplay },
     props: {
-        original: { type: String, required: true },
-        correction: { type: String, required: true },
+        originalID: { type: Number, required: true },
+        correctionID: {
+            type: Number,
+        },
+    },
+    mounted() {
+        this.getPosts()
     },
     computed: {
-        difftext(): { text: string, type: "normal" | "add" | "sub" }[] {
-            let diffs = (diffWords(this.original, this.correction) as { value: string, added: boolean, removed: boolean }[]);
-            let id = 0;
-            let mapped_diffs = diffs.map((v) => {
-                id += 1
-                return { id: id, text: v.value, type: (v.added ? "add" : (v.removed ? "sub" : "normal")) as "normal" | "add" | "sub" }
-            })
-            return mapped_diffs;
-        }
+        isEditable(): boolean {
+            return this.correctionID === undefined
+        },
     },
-});
+    methods: {
+        handleSubmit() {
+            add_correction(this.correction, this.originalID).then(x => {
+                this.$router.push({
+                    name: 'Correction',
+                    params: { postid: this.originalID, corrid: x },
+                })
+            })
+        },
+        getPosts() {
+            get_post(this.originalID).then(v => {
+                this.original = v.text
+                if (this.isEditable) {
+                    this.correction = v.text
+                }
+            })
+            if (this.correctionID !== undefined) {
+                get_post(this.correctionID).then(v => {
+                    this.correction = v.text
+                })
+            }
+        },
+    },
+    data() {
+        return { original: '', correction: '' }
+    },
+})

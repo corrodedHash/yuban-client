@@ -2,30 +2,16 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import PostEditor from '@/components/PostEditor.vue'
 import GroupListActor from '@/components/GroupListActor.vue'
 import Panel from '@/components/admin/Panel.vue'
-
+import PostDiff from '@/components/PostDiff.vue'
 const routes: Array<RouteRecordRaw> = [
     {
-        path: '/',
-        name: 'New',
-        component: PostEditor,
-        props: true,
-    },
-    {
-        path: '/r/post/:postid',
-        name: 'View',
+        path: '/r/newthread/:groupid',
+        name: 'NewThread',
         component: PostEditor,
         props: route => ({
-            postid: parseInt(route.params.postid as string),
-            threadid: undefined,
-        }),
-    },
-    {
-        path: '/r/correction/:postid/:corrid',
-        name: 'Correction',
-        component: PostEditor,
-        props: route => ({
-            postid: parseInt(route.params.postid as string),
-            corrid: parseInt(route.params.corrid as string),
+            parentid: parseInt(route.params.groupid as string),
+            parenttype: 'group',
+            postid: undefined,
         }),
     },
     {
@@ -33,22 +19,46 @@ const routes: Array<RouteRecordRaw> = [
         name: 'NewPost',
         component: PostEditor,
         props: route => ({
+            parentid: parseInt(route.params.threadid as string),
+            parenttype: 'thread',
             postid: undefined,
-            threadid: parseInt(route.params.threadid as string),
         }),
     },
     {
         path: '/r/newcorrection/:postid',
         name: 'NewCorrection',
+        component: PostDiff,
+        props: route => ({
+            originalID: parseInt(route.params.postid as string),
+            correctionID: undefined,
+        }),
+    },
+    {
+        path: '/r/post/:postid',
+        name: 'View',
         component: PostEditor,
         props: route => ({
+            parentid: 0,
+            parenttype: 'thread',
             postid: parseInt(route.params.postid as string),
-            corrid: null,
+        }),
+    },
+    {
+        path: '/r/correction/:postid/:corrid',
+        name: 'Correction',
+        component: PostDiff,
+        props: route => ({
+            originalID: parseInt(route.params.postid as string),
+            correctionID: parseInt(route.params.corrid as string),
         }),
     },
     {
         path: '/r/menu',
         name: 'Menu',
+        component: GroupListActor,
+    },
+    {
+        path: '/',
         component: GroupListActor,
     },
     {

@@ -30,14 +30,7 @@ export default defineComponent({
       }
     },
     handlePostSwitch(thread_id: number | null, post_id: number | null) {
-      if (post_id === null && thread_id === null) {
-        this.$router.push({ path: "/" });
-      } else if (post_id !== null && thread_id === null) {
-      } else if (post_id !== null && thread_id !== null) {
-        this.$router.push({ name: "View", params: { postid: post_id } });
-      } else if (post_id === null && thread_id !== null) {
-        this.$router.push({ name: "NewPost", params: { threadid: thread_id } });
-      }
+     
     },
   },
 });

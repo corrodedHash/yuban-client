@@ -1,5 +1,10 @@
 import { defineComponent } from 'vue'
-import { ThreadSummary, PostSummary, summarize_threads } from '@/api/api'
+import {
+    ThreadSummary,
+    PostSummary,
+    summarize_threads,
+    summarize_posts,
+} from '@/api/api'
 
 export default defineComponent({
     name: 'ThreadList',
@@ -19,33 +24,57 @@ export default defineComponent({
     data() {
         return {
             threads: [] as ThreadSummary[],
+            posts: null as PostSummary[] | null,
+            selectedPost: null as string | null,
         }
+    },
+    watch: {
+        selectedPost(newPost, oldPost) {
+            this.posts = null
+            summarize_posts(newPost)
+                .then(x => {
+                    console.log(x)
+                    this.posts = x
+                })
+                .catch(() => {
+                    this.posts = []
+                })
+        },
     },
     mounted() {
         this.requestPosts()
     },
     methods: {
         selectNew() {
-            this.$emit('selectPost', null, null)
-            ;(this.$refs.postList as any).value = ''
+            this.$router.push({
+                name: 'NewThread',
+                params: { groupid: this.groupid },
+            })
         },
         selectNewPost(thread_id: number) {
-            this.$emit('selectPost', thread_id, null)
-        },
-        handleSelectedPost(thread_index: number, index: PostSummary) {
-            if (index !== null) {
-                this.$emit('selectPost', thread_index, index.id)
-            }
+            this.$router.push({
+                name: 'NewPost',
+                params: { threadid: thread_id },
+            })
         },
         selectNewCorrection(thread_id: number, post: PostSummary) {
-            this.$emit('selectCorrection', thread_id, post.id, null)
+            this.$router.push({
+                name: 'NewCorrection',
+                params: { postid: post.id },
+            })
+        },
+        handleSelectedPost(thread_index: number, index: PostSummary) {
+            this.$router.push({ name: 'View', params: { postid: index.id } })
         },
         handleSelectedCorrection(
             thread_index: number,
             index: PostSummary,
             corr_index: number
         ) {
-            this.$emit('selectCorrection', thread_index, index.id, corr_index)
+            this.$router.push({
+                name: 'Correction',
+                params: { postid: index.id, corrid: corr_index },
+            })
         },
         requestPosts() {
             let me = this

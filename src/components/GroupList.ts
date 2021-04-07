@@ -29,6 +29,7 @@ export default defineComponent({
             let me = this
             summarize_groups().then(v => {
                 me.groups = v
+                console.log(v)
             })
         },
         handleClick(target: any, event: any) {

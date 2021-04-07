@@ -141,15 +141,13 @@ interface ThreadSummaryRaw {
     id: number
     creator: string
     opened_on: string
-    langcodes: string
-    correction_counts: string
+    languages: string
 }
 export interface ThreadSummary {
     id: number
     creator: string
     opened_on: Date
-    langcodes: string[]
-    correction_counts: number[]
+    languages: { lang: string; count: number }[]
 }
 
 export function summarize_threads(groupid: number): Promise<ThreadSummary[]> {
@@ -160,16 +158,15 @@ export function summarize_threads(groupid: number): Promise<ThreadSummary[]> {
             if (postreq.status === 200) {
                 let groups = postreq.response as ThreadSummaryRaw[]
                 let parsed_groups = groups.map(v => {
-                    let langcodes = JSON.parse(v.langcodes) as string[]
-                    let correction_counts = JSON.parse(
-                        v.correction_counts
-                    ) as number[]
+                    let languages = JSON.parse(v.languages) as {
+                        lang: string
+                        count: number
+                    }[]
                     let new_threadsummary: ThreadSummary = {
                         id: v.id,
                         creator: v.creator,
                         opened_on: new Date(v.opened_on),
-                        langcodes,
-                        correction_counts,
+                        languages,
                     }
                     return new_threadsummary
                 })
@@ -280,7 +277,8 @@ export function get_post(post_id: number): Promise<Post> {
     })
 }
 
-export function new_post(
+export function add_thread(
+    group_id: number,
     post: string,
     langcode: string
 ): Promise<{ thread_id: number; post_id: number }> {
@@ -288,6 +286,10 @@ export function new_post(
         let postreq = new XMLHttpRequest()
         postreq.responseType = 'json'
         postreq.onload = () => {
+            if (postreq.status !== 200) {
+                reject()
+                return
+            }
             resolve(postreq.response)
         }
         postreq.onerror = () => {
@@ -296,14 +298,18 @@ export function new_post(
         postreq.onabort = () => {
             reject()
         }
-        postreq.open('PUT', `${API_ROOT}/addgroup/${langcode}`, true)
+        postreq.open(
+            'PUT',
+            `${API_ROOT}/addthread/${group_id}/${langcode}`,
+            true
+        )
         postreq.send(post)
     })
 }
 
 export function add_post(
-    post: string,
     thread_id: number,
+    post: string,
     langcode: string
 ): Promise<number> {
     return new Promise((resolve, reject) => {
@@ -331,6 +337,10 @@ export function add_correction(post: string, orig_id: number): Promise<number> {
     return new Promise((resolve, reject) => {
         let postreq = new XMLHttpRequest()
         postreq.onload = () => {
+            if (postreq.status !== 200) {
+                reject()
+                return
+            }
             console.assert(typeof postreq.response == 'number')
             resolve(postreq.response)
         }

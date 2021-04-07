@@ -46,7 +46,15 @@ export function list_groups(): Promise<GroupSummary[]> {
                     users = []
                 } else {
                     try {
-                        users = JSON.parse(v.users)
+                        let temp_users = JSON.parse(v.users) as
+                            | string[]
+                            | [null]
+                        if (temp_users[0] === null) {
+                            console.assert(temp_users.length == 1)
+                            users = []
+                        } else {
+                            users = temp_users as string[]
+                        }
                     } catch (error) {
                         users = [v.users]
                     }
