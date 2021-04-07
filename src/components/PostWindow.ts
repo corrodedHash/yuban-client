@@ -15,7 +15,8 @@ export default defineComponent({
             logout()
                 .then(() => this.$emit('logout'))
                 .catch(() => {
-                    console.log('Could not logout')
+                    this.$emit('logout')
+                    console.warn('Could not logout')
                 })
         },
         handleCorrectionSwitch(

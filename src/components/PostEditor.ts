@@ -70,7 +70,7 @@ export default defineComponent({
                             })
                         })
                         .catch(() => {
-                            console.log('Could not add thread')
+                            console.warn('Could not add thread')
                         })
                     break
                 case 'thread':
@@ -82,7 +82,7 @@ export default defineComponent({
                             })
                         })
                         .catch(() => {
-                            console.log('Could not add post')
+                            console.warn('Could not add post')
                         })
                     break
                 default:

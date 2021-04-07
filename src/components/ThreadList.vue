@@ -7,16 +7,30 @@
             @click="selectNew"
             >Add Thread</el-button
         >
-        <el-collapse v-model="selectedPost" accordion>
+        <el-collapse @change="selectedPost" accordion>
             <el-collapse-item
                 v-for="thread in threads"
                 :key="thread.id"
                 :name="thread.id"
             >
                 <template #title>
-                    {{ thread.creator }} -
                     {{ thread.opened_on.toLocaleString() }}
-                    {{ thread.languages }}
+                    <span
+                        v-if="thread.languages.length > 0"
+                        class="languageblock"
+                    >
+                        <span
+                            v-for="lang in thread.languages"
+                            :key="lang.lang"
+                            :class="{
+                                languagekey: true,
+                                notcorrected: !(lang.count > 0),
+                                corrected: lang.count > 0,
+                            }"
+                        >
+                            {{ lang.lang.toUpperCase() }}
+                        </span>
+                    </span>
                 </template>
                 <el-button
                     icon="el-icon-plus"
@@ -35,8 +49,11 @@
                         class="postCard"
                         @click="handleSelectedPost(thread.id, post)"
                     >
-                        {{ post.user }} - {{ post.date.toLocaleString() }} -
-                        {{ post.lang }}<br />{{ post.ellipsis }}...
+                        {{ post.username }} -
+                        {{ post.opened_on.toLocaleString() }} -
+                        {{ post.lang.toUpperCase() }}<br />{{
+                            post.ellipsis
+                        }}...
                         <br />
                         <el-button
                             icon="el-icon-plus"
@@ -70,6 +87,19 @@
 <script src="./ThreadList.ts" />
 
 <style scoped>
+.languageblock {
+    margin-left: 10px;
+}
+.languagekey {
+    margin-right: 2px;
+    padding: 3px;
+}
+.notcorrected {
+    background-color: lightcoral;
+}
+.corrected {
+    background-color: green;
+}
 .postCard {
     cursor: pointer;
     border: 1px;
@@ -79,7 +109,8 @@
     padding: 3px;
     background-color: rgb(238, 244, 247);
 }
-.postCard:hover {
+.postCard:hover,
+.postCard:active {
     cursor: pointer;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-style: solid;

@@ -9,24 +9,22 @@ export default defineComponent({
         removeUser(name: string) {
             remove_user(name)
                 .then(() => {
-                    console.log('Removed user')
                     list_users().then(data => {
                         this.users = data
                     })
                 })
-                .catch(() => console.log('Failed to remove user'))
+                .catch(() => console.warn('Failed to remove user'))
         },
         addUser() {
             add_user(this.username, this.password)
                 .then(() => {
-                    console.log('Add user')
                     list_users().then(data => {
                         this.users = data
                     })
                     this.username = ''
                     this.password = ''
                 })
-                .catch(() => console.log('Failed to add user'))
+                .catch(() => console.warn('Failed to add user'))
         },
     },
     mounted() {

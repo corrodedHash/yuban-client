@@ -25,26 +25,26 @@ export default defineComponent({
         return {
             threads: [] as ThreadSummary[],
             posts: null as PostSummary[] | null,
-            selectedPost: null as string | null,
         }
     },
-    watch: {
-        selectedPost(newPost, oldPost) {
+    watch: {},
+    mounted() {
+        this.requestPosts()
+    },
+    methods: {
+        selectedPost(newPost: string) {
             this.posts = null
-            summarize_posts(newPost)
+            if (newPost == '') {
+                return
+            }
+            summarize_posts(parseInt(newPost))
                 .then(x => {
-                    console.log(x)
                     this.posts = x
                 })
                 .catch(() => {
                     this.posts = []
                 })
         },
-    },
-    mounted() {
-        this.requestPosts()
-    },
-    methods: {
         selectNew() {
             this.$router.push({
                 name: 'NewThread',

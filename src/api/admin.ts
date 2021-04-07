@@ -39,7 +39,6 @@ export function list_groups(): Promise<GroupSummary[]> {
                 return
             }
             let group_raw: GroupSummaryRaw[] = postreq.response
-            console.log(group_raw)
             let group = group_raw.map(v => {
                 let users: string[]
                 if (v.users === null) {

@@ -1,5 +1,5 @@
 <template>
-    <el-tabs type="card" @tab-click="handleClick">
+    <el-tabs type="card">
         <el-tab-pane v-for="group in groups" :key="group.groupid">
             <template #label>
                 {{ group.groupname }} [{{ group.threadcount }}]

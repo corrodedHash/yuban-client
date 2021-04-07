@@ -190,17 +190,17 @@ export interface CorrectionSummary {
 
 export interface PostSummaryRaw {
     id: number
-    date: string
+    opened_on: string
     ellipsis: string
-    user: string
+    username: string
     lang: string
     corrections: string
 }
 export interface PostSummary {
     id: number
-    date: Date
+    opened_on: Date
     ellipsis: string
-    user: string
+    username: string
     lang: string
     corrections: CorrectionSummary[]
 }
@@ -227,9 +227,9 @@ export function summarize_posts(thread_id: number): Promise<PostSummary[]> {
                     }
                     let new_postsummary: PostSummary = {
                         id: v.id,
-                        date: new Date(v.date),
+                        opened_on: new Date(v.opened_on),
                         ellipsis: v.ellipsis,
-                        user: v.user,
+                        username: v.username,
                         lang: v.lang,
                         corrections,
                     }
@@ -272,6 +272,8 @@ export function get_post(post_id: number): Promise<Post> {
                 reject()
             }
         }
+        postreq.onerror = reject
+        postreq.onabort = reject
         postreq.open('GET', `${API_ROOT}/post/${post_id}`, true)
         postreq.send()
     })
@@ -292,12 +294,8 @@ export function add_thread(
             }
             resolve(postreq.response)
         }
-        postreq.onerror = () => {
-            reject()
-        }
-        postreq.onabort = () => {
-            reject()
-        }
+        postreq.onerror = reject
+        postreq.onabort = reject
         postreq.open(
             'PUT',
             `${API_ROOT}/addthread/${group_id}/${langcode}`,
@@ -319,12 +317,8 @@ export function add_post(
             console.assert(typeof postreq.response == 'number')
             resolve(postreq.response)
         }
-        postreq.onerror = () => {
-            reject()
-        }
-        postreq.onabort = () => {
-            reject()
-        }
+        postreq.onerror = reject
+        postreq.onabort = reject
         postreq.open(
             'PUT',
             `${API_ROOT}/addpost/${thread_id}/${langcode}`,
@@ -336,6 +330,7 @@ export function add_post(
 export function add_correction(post: string, orig_id: number): Promise<number> {
     return new Promise((resolve, reject) => {
         let postreq = new XMLHttpRequest()
+        postreq.responseType = 'json'
         postreq.onload = () => {
             if (postreq.status !== 200) {
                 reject()
@@ -344,12 +339,8 @@ export function add_correction(post: string, orig_id: number): Promise<number> {
             console.assert(typeof postreq.response == 'number')
             resolve(postreq.response)
         }
-        postreq.onerror = () => {
-            reject()
-        }
-        postreq.onabort = () => {
-            reject()
-        }
+        postreq.onerror = reject
+        postreq.onabort = reject
         postreq.open('PUT', `${API_ROOT}/addcorrection/${orig_id}`, true)
         postreq.send(post)
     })

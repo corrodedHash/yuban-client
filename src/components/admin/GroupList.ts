@@ -22,11 +22,10 @@ export default defineComponent({
         addGroup() {
             add_group(this.groupname)
                 .then(groupid => {
-                    console.log('Add group', groupid)
                     this.reloadGroups()
                     this.groupname = ''
                 })
-                .catch(() => console.log('Failed to add group'))
+                .catch(() => console.warn('Failed to add group'))
         },
         removeGroup(groupname: string) {
             remove_group(groupname).then(() => {
@@ -35,13 +34,13 @@ export default defineComponent({
         },
         deleteUser(groupname: string, username: string) {
             remove_group_user(groupname, username).then(() => {
-                console.log('User removed')
+                console.warn('User removed')
                 this.reloadGroups()
             })
         },
         addUser(groupname: string, username: string) {
             add_group_user(groupname, username).then(() => {
-                console.log('User added')
+                console.warn('User added')
                 this.reloadGroups()
             })
         },
@@ -51,7 +50,6 @@ export default defineComponent({
                 me.groups = data
             })
             list_users().then(data => {
-                console.log(data)
                 me.users = data
             })
         },
