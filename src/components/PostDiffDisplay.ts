@@ -18,7 +18,7 @@ export default defineComponent({
                 case 'Original':
                     return [{ text: this.original, type: 'sub' }]
                 case 'Correction':
-                    return [{ text: this.original, type: 'add' }]
+                    return [{ text: this.correction, type: 'add' }]
                 case 'Mixed':
                     break
                 default:

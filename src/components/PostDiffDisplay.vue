@@ -18,6 +18,7 @@
 <style scoped>
 .diffbox {
     margin-bottom: 10px;
+    line-height: 1.6;
 }
 .add {
     /* color: greenyellow; */

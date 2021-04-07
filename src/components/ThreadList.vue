@@ -116,4 +116,12 @@
     border-style: solid;
     background-color: rgb(142, 187, 204);
 }
+.correctionBox {
+    border: 1px;
+    border-style: dotted;
+    border-radius: 4px;
+    margin: 1px;
+    padding: 1px;
+    background-color: rgb(138, 200, 232);
+}
 </style>
