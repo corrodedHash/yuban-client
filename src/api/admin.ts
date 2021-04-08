@@ -1,45 +1,9 @@
-const ADMIN_API_ROOT = '/api/admin'
+import { RequestPromiser } from './common'
 
-type RequestOptions = { method?: string; type?: XMLHttpRequestResponseType }
-
-function sendPromise(
-    service: string,
-    data: string | undefined,
-    options: RequestOptions = {}
-): Promise<XMLHttpRequest> {
-    let default_options = {
-        method: 'POST',
-        type: 'json',
-    }
-    let filled_options = Object.assign(default_options, options)
-    return new Promise((resolve, reject) => {
-        let loginreq = new XMLHttpRequest()
-        loginreq.onload = ev => {
-            if (loginreq.status === 401) {
-                reject(Error('Unauthorized'))
-            }
-            resolve(loginreq)
-        }
-        loginreq.onerror = reject
-        loginreq.onabort = reject
-        loginreq.responseType = filled_options.type
-        loginreq.open(
-            filled_options.method,
-            `${ADMIN_API_ROOT}/${service}`,
-            true
-        )
-        loginreq.send(data)
-    })
-}
-function requestPromise(
-    service: string,
-    options: RequestOptions = {}
-): Promise<XMLHttpRequest> {
-    return sendPromise(service, undefined, options)
-}
+const requester = new RequestPromiser('/api/admin')
 
 export async function list_users(): Promise<string[]> {
-    const x = await requestPromise('users', { method: 'GET' })
+    const x = await requester.requestPromise('users', { method: 'GET' })
     return x.response
 }
 
@@ -55,7 +19,7 @@ export interface GroupSummary {
 }
 
 export async function list_groups(): Promise<GroupSummary[]> {
-    const x = await requestPromise('groups', { method: 'GET' })
+    const x = await requester.requestPromise('groups', { method: 'GET' })
     if (x.status !== 200) {
         throw undefined
     }
@@ -77,18 +41,16 @@ export async function list_groups(): Promise<GroupSummary[]> {
                 users = [v.users]
             }
         }
-        let result: GroupSummary = {
-            groupid: v.groupid,
-            groupname: v.groupname,
+        let result: GroupSummary = Object.assign(v, {
             users,
-        }
+        })
         return result
     })
     return group
 }
 
 export async function add_group(groupname: string): Promise<number> {
-    const x = await sendPromise('group', groupname, { method: 'PUT' })
+    const x = await requester.sendPromise('group', groupname, { method: 'PUT' })
     if (x.status !== 200) {
         throw undefined
     }
@@ -96,7 +58,9 @@ export async function add_group(groupname: string): Promise<number> {
 }
 
 export async function remove_group(groupname: string): Promise<void> {
-    const x = await sendPromise('group', groupname, { method: 'DELETE' })
+    const x = await requester.sendPromise('group', groupname, {
+        method: 'DELETE',
+    })
     if (x.status !== 200) {
         throw undefined
     }
@@ -106,7 +70,7 @@ export async function add_group_user(
     groupname: string,
     username: string
 ): Promise<void> {
-    const x = await sendPromise(
+    const x = await requester.sendPromise(
         'group_user',
         JSON.stringify({ username, groupname }),
         { method: 'PUT' }
@@ -120,7 +84,7 @@ export async function remove_group_user(
     groupname: string,
     username: string
 ): Promise<void> {
-    const x = await sendPromise(
+    const x = await requester.sendPromise(
         'group_user',
         JSON.stringify({ username, groupname }),
         { method: 'DELETE' }
@@ -131,16 +95,20 @@ export async function remove_group_user(
 }
 
 export async function remove_user(username: string): Promise<void> {
-    const x = await sendPromise('login', JSON.stringify({ username }), {
-        method: 'DELETE',
-    })
+    const x = await requester.sendPromise(
+        'login',
+        JSON.stringify({ username }),
+        {
+            method: 'DELETE',
+        }
+    )
 }
 
 export async function add_user(
     username: string,
     password: string
 ): Promise<void> {
-    const x = await sendPromise(
+    const x = await requester.sendPromise(
         'login',
         JSON.stringify({ username, password }),
         {

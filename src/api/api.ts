@@ -1,41 +1,9 @@
-const API_ROOT = '/api'
+import { RequestPromiser } from './common'
 
-type RequestOptions = { method?: string; type?: XMLHttpRequestResponseType }
-
-function sendPromise(
-    service: string,
-    data: any,
-    options: RequestOptions = {}
-): Promise<XMLHttpRequest> {
-    let default_options = {
-        method: 'POST',
-        type: 'json',
-    }
-    let filled_options = Object.assign(default_options, options)
-    return new Promise((resolve, reject) => {
-        let loginreq = new XMLHttpRequest()
-        loginreq.onload = ev => {
-            if (loginreq.status === 401) {
-                reject(Error('Unauthorized'))
-            }
-            resolve(loginreq)
-        }
-        loginreq.onerror = reject
-        loginreq.onabort = reject
-        loginreq.responseType = filled_options.type
-        loginreq.open(filled_options.method, `${API_ROOT}/${service}`, true)
-        loginreq.send(data)
-    })
-}
-function requestPromise(
-    service: string,
-    options: RequestOptions = {}
-): Promise<XMLHttpRequest> {
-    return sendPromise(service, undefined, options)
-}
+const requester = new RequestPromiser('/api')
 
 export async function logout(): Promise<void> {
-    const x = await requestPromise('logout')
+    const x = await requester.requestPromise('logout')
     switch (x.status) {
         case 200:
             return
@@ -53,7 +21,7 @@ export async function check_login(
         username: username,
         password: password,
     })
-    const x = await sendPromise('login', json_data)
+    const x = await requester.sendPromise('login', json_data)
     switch (x.status) {
         case 200:
             console.assert(typeof x.response == 'boolean')
@@ -65,7 +33,7 @@ export async function check_login(
 }
 
 export async function check_token(): Promise<boolean> {
-    const x = await requestPromise('testtoken', { method: 'GET' })
+    const x = await requester.requestPromise('testtoken', { method: 'GET' })
     switch (x.status) {
         case 202:
             return true
@@ -84,7 +52,7 @@ export interface GroupSummary {
 }
 
 export async function summarize_groups(): Promise<GroupSummary[]> {
-    const x = await requestPromise('summary', { method: 'GET' })
+    const x = await requester.requestPromise('summary', { method: 'GET' })
     if (x.status === 200) {
         let groups = x.response as GroupSummary[]
         return groups
@@ -109,7 +77,7 @@ export interface ThreadSummary {
 export async function summarize_threads(
     groupid: number
 ): Promise<ThreadSummary[]> {
-    const x = await requestPromise(`summary_group/${groupid}`, {
+    const x = await requester.requestPromise(`summary_group/${groupid}`, {
         method: 'GET',
     })
     if (x.status !== 200) {
@@ -158,7 +126,7 @@ export interface PostSummary {
 export async function summarize_posts(
     thread_id: number
 ): Promise<PostSummary[]> {
-    const x = await requestPromise(`summary_thread/${thread_id}`, {
+    const x = await requester.requestPromise(`summary_thread/${thread_id}`, {
         method: 'GET',
     })
 
@@ -177,14 +145,11 @@ export async function summarize_posts(
         } else {
             corrections = raw_corrections as CorrectionSummary[]
         }
-        let new_postsummary: PostSummary = {
-            id: v.id,
+        let new_postsummary: PostSummary = Object.assign(v, {
             opened_on: new Date(v.opened_on),
-            ellipsis: v.ellipsis,
-            username: v.username,
-            lang: v.lang,
             corrections,
-        }
+        })
+
         return new_postsummary
     })
     return parsed_posts
@@ -200,7 +165,7 @@ export interface Post {
 }
 
 export async function get_post(post_id: number): Promise<Post> {
-    const x = await requestPromise(`post/${post_id}`, {
+    const x = await requester.requestPromise(`post/${post_id}`, {
         method: 'GET',
     })
     if (x.status !== 200) {
@@ -218,9 +183,13 @@ export async function add_thread(
     post: string,
     langcode: string
 ): Promise<{ thread_id: number; post_id: number }> {
-    const x = await sendPromise(`addthread/${group_id}/${langcode}`, post, {
-        method: 'PUT',
-    })
+    const x = await requester.sendPromise(
+        `addthread/${group_id}/${langcode}`,
+        post,
+        {
+            method: 'PUT',
+        }
+    )
     if (x.status !== 200) {
         throw undefined
     }
@@ -232,9 +201,13 @@ export async function add_post(
     post: string,
     langcode: string
 ): Promise<number> {
-    const x = await sendPromise(`addpost/${thread_id}/${langcode}`, post, {
-        method: 'PUT',
-    })
+    const x = await requester.sendPromise(
+        `addpost/${thread_id}/${langcode}`,
+        post,
+        {
+            method: 'PUT',
+        }
+    )
     console.assert(typeof x.response == 'number')
     return x.response
 }
@@ -243,7 +216,7 @@ export async function add_correction(
     post: string,
     orig_id: number
 ): Promise<number> {
-    const x = await sendPromise(`addcorrection/${orig_id}`, post, {
+    const x = await requester.sendPromise(`addcorrection/${orig_id}`, post, {
         method: 'PUT',
     })
 
