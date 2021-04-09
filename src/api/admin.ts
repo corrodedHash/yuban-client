@@ -50,7 +50,7 @@ export async function list_groups(): Promise<GroupSummary[]> {
 }
 
 export async function add_group(groupname: string): Promise<number> {
-    const x = await requester.sendPromise('group', groupname, { method: 'PUT' })
+    const x = await requester.sendPromise('group', JSON.stringify(groupname), { method: 'PUT' })
     if (x.status !== 200) {
         throw undefined
     }
@@ -58,7 +58,7 @@ export async function add_group(groupname: string): Promise<number> {
 }
 
 export async function remove_group(groupname: string): Promise<void> {
-    const x = await requester.sendPromise('group', groupname, {
+    const x = await requester.sendPromise('group', JSON.stringify(groupname), {
         method: 'DELETE',
     })
     if (x.status !== 200) {
