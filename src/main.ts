@@ -1,12 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
+import { ElLoading } from 'element-plus'
 
-import ElementPlus from 'element-plus';
-import 'element-plus/lib/theme-chalk/index.css';
 import router from './router'
 
 const app = createApp(App)
 app.use(router)
-app.use(ElementPlus)
+ElLoading.install(app)
 app.mount('#app')

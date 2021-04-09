@@ -1,7 +1,9 @@
 import { defineComponent } from 'vue'
 import { logout } from '@/api/api'
+import { ElContainer, ElHeader, ElButton, ElMain } from 'element-plus'
 export default defineComponent({
     name: 'PostWindow',
+    components: { ElContainer, ElHeader, ElButton, ElMain },
     emits: {
         logout() {
             return true

@@ -5,10 +5,11 @@ import {
     summarize_threads,
     summarize_posts,
 } from '@/api/api'
-
+import { ElButton, ElCollapse, ElCollapseItem } from 'element-plus'
 export default defineComponent({
     name: 'ThreadList',
     props: { groupid: { type: Number, required: true } },
+    components: { ElButton, ElCollapse, ElCollapseItem },
     emits: {
         selectPost(thread_id: number | null, post_id: number | null) {
             return true

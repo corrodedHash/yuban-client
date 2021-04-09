@@ -1,9 +1,10 @@
 import { defineComponent, PropType } from 'vue'
 import { diffWords, diffChars } from 'diff'
 import { assertUnreachable } from '@/util'
-
+import { ElRadioGroup, ElRadioButton } from 'element-plus'
 export default defineComponent({
     name: 'PostDiff',
+    components: { ElRadioGroup, ElRadioButton },
     props: {
         original: { type: String, required: true },
         correction: { type: String, required: true },

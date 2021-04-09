@@ -1,9 +1,10 @@
 import { defineComponent } from 'vue'
 import { GroupSummary, summarize_groups } from '@/api/api'
 import ThreadList from '@/components/ThreadList.vue'
+import { ElTabs, ElTabPane } from 'element-plus';
 export default defineComponent({
     name: 'GroupList',
-    components: { ThreadList },
+    components: { ThreadList, ElTabs, ElTabPane },
     emits: {
         selectPost(thread_id: number | null, post_id: number | null) {
             return true

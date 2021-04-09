@@ -8,8 +8,10 @@ import {
     list_users,
 } from '@/api/admin'
 import { GroupSummary } from '@/api/admin'
+import { ElPopconfirm, ElButton, ElAutocomplete, ElInput } from "element-plus"
 export default defineComponent({
     name: 'UserList',
+    components: { ElPopconfirm, ElButton, ElAutocomplete, ElInput },
     data() {
         return {
             groups: [] as GroupSummary[],

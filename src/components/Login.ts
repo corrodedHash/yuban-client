@@ -1,8 +1,10 @@
 
 import { defineComponent } from "vue";
 import { check_token, check_login } from "@/api/api";
+import { ElInput, ElLoading } from 'element-plus';
 export default defineComponent({
     name: "Login",
+    components: { ElInput, ElLoading },
     emits: {
         login() {
             return true;
@@ -33,7 +35,7 @@ export default defineComponent({
                 this.checkedToken = true;
             })
         },
-        
+
         login() {
             check_login(this.username, this.password)
                 .then(this.handleLoginPromise.bind(this)).catch(() => {

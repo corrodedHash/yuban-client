@@ -1,7 +1,9 @@
 import { defineComponent } from 'vue'
 import { add_user, remove_user, list_users } from '@/api/admin'
+import { ElPopconfirm, ElButton, ElInput } from 'element-plus'
 export default defineComponent({
     name: 'UserList',
+    components: { ElPopconfirm, ElButton, ElInput },
     data() {
         return { users: [] as string[], username: '', password: '' }
     },

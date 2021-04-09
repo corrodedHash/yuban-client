@@ -1,10 +1,11 @@
 import { defineComponent, PropType } from 'vue'
 import { add_thread, get_post, add_post, add_correction } from '@/api/api'
-import PostDiff from '@/components/PostDiff.vue'
 import { assertUnreachable } from '@/util'
+import { ElButton } from 'element-plus'
 
 export default defineComponent({
     name: 'PostEditor',
+    components: { ElButton },
     props: {
         parenttype: {
             type: String as PropType<'group' | 'thread'>,

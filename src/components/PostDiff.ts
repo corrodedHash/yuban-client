@@ -1,9 +1,10 @@
 import { defineComponent, PropType } from 'vue'
 import PostDiffDisplay from './PostDiffDisplay.vue'
 import { get_post, add_correction } from '@/api/api'
+import { ElButton } from 'element-plus';
 export default defineComponent({
     name: 'PostDiff',
-    components: { PostDiffDisplay },
+    components: { PostDiffDisplay, ElButton },
     props: {
         originalID: { type: Number, required: true },
         correctionID: {
