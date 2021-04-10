@@ -58,7 +58,6 @@ export default defineComponent({
                     assertUnreachable(this.diffstyle)
                     throw Error("Unreachable")
             }
-            console.log(mapped_diffs)
             return mapped_diffs
         },
     },
