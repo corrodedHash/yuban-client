@@ -1,27 +1,27 @@
 <template>
-    <div>
-        <textarea class="editor" v-model="text" :disabled="!canEdit"></textarea
-        ><br />
-        <el-button
-            type="primary"
-            icon="el-icon-check"
-            @click="handleSubmit"
-            :disabled="!canEdit"
-            >Submit</el-button
-        >
-        <select ref="langcode">
-            <option value="de">German</option>
-            <option value="zh">Chinese</option>
-        </select>
-    </div>
+  <div>
+    <textarea class="editor" v-model="text" :disabled="!canEdit"></textarea
+    ><br />
+    <el-button
+      type="primary"
+      icon="el-icon-check"
+      @click="handleSubmit"
+      v-if="canEdit"
+      >Submit</el-button
+    >
+    <select v-model="textlang" :disabled="!canEdit">
+      <option value="de">German</option>
+      <option value="zh">Chinese</option>
+    </select>
+  </div>
 </template>
 
 <script lang="ts" src="./PostEditor.ts" />
 
 <style scoped>
 .editor {
-    resize: none;
-    width: 100%;
-    min-height: 10em;
+  resize: none;
+  width: 100%;
+  min-height: 10em;
 }
 </style>

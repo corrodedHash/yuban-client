@@ -15,7 +15,7 @@ export default defineComponent({
         postid: { type: Number },
     },
     data() {
-        return { text: '' }
+        return { text: '', textlang: '' }
     },
     mounted() {
         this.handlePostChange()
@@ -50,6 +50,7 @@ export default defineComponent({
                 case 'thread':
                     get_post(this.postid).then(x => {
                         this.text = x.text
+                        this.textlang = x.langcode.toLowerCase()
                     })
                     break
                 default:
