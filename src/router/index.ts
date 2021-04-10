@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import PostEditor from '@/components/PostEditor.vue'
 import GroupListActor from '@/components/menu/GroupListActor.vue'
-import Panel from '@/components/admin/Panel.vue'
 import PostDiff from '@/components/PostDiff.vue'
 const routes: Array<RouteRecordRaw> = [
     {
@@ -64,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/admin',
         name: 'Admin',
-        component: Panel,
+        component: () => import('@/components/admin/Panel.vue'),
     },
 ]
 

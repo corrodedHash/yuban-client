@@ -6,9 +6,12 @@
 </template>
 
 <script lang="ts" src="./App.ts" />
-<style scoped>
-</style>
+
 <style>
+html,
+body {
+  height: 100%;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
