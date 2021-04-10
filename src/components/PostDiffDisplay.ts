@@ -15,16 +15,6 @@ export default defineComponent({
     },
     computed: {
         difftext(): { text: string; type: 'normal' | 'add' | 'sub' }[] {
-            switch (this.diffstyle) {
-                case 'Original':
-                    return [{ text: this.original, type: 'sub' }]
-                case 'Correction':
-                    return [{ text: this.correction, type: 'add' }]
-                case 'Mixed':
-                    break
-                default:
-                    assertUnreachable(this.diffstyle)
-            }
             let diffs: { value: string; added: boolean; removed: boolean }[]
             if (this.lang.toLowerCase() == 'zh') {
                 diffs = diffChars(this.original, this.correction) as {
@@ -51,6 +41,24 @@ export default defineComponent({
                         | 'sub',
                 }
             })
+
+            switch (this.diffstyle) {
+                case 'Original':
+                    mapped_diffs = mapped_diffs.filter(v => {
+                        return v.type != 'add'
+                    })
+                    break;
+                case 'Correction':
+                    mapped_diffs = mapped_diffs.filter(v => {
+                        return v.type != 'sub'
+                    })
+                case 'Mixed':
+                    break
+                default:
+                    assertUnreachable(this.diffstyle)
+                    throw Error("Unreachable")
+            }
+            console.log(mapped_diffs)
             return mapped_diffs
         },
     },

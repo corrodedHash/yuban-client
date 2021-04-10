@@ -1,12 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import PostEditor from '@/components/PostEditor.vue'
-import GroupListActor from '@/components/menu/GroupListActor.vue'
-import PostDiff from '@/components/PostDiff.vue'
+
+const asyncPanel = () => import('@/components/admin/Panel.vue')
+const asyncPostEditor = () => import('@/components/PostEditor.vue')
+const asyncGroupListActor = () => import('@/components/menu/GroupListActor.vue')
+const asyncPostDiff = () => import('@/components/PostDiff.vue')
+
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/newthread/:groupid',
         name: 'NewThread',
-        component: PostEditor,
+        component: asyncPostEditor,
         props: route => ({
             parentid: parseInt(route.params.groupid as string),
             parenttype: 'group',
@@ -16,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/newpost/:threadid',
         name: 'NewPost',
-        component: PostEditor,
+        component: asyncPostEditor,
         props: route => ({
             parentid: parseInt(route.params.threadid as string),
             parenttype: 'thread',
@@ -26,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/newcorrection/:postid',
         name: 'NewCorrection',
-        component: PostDiff,
+        component: asyncPostDiff,
         props: route => ({
             originalID: parseInt(route.params.postid as string),
             correctionID: undefined,
@@ -35,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/post/:postid',
         name: 'View',
-        component: PostEditor,
+        component: asyncPostEditor,
         props: route => ({
             parentid: 0,
             parenttype: 'thread',
@@ -45,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/correction/:postid/:corrid',
         name: 'Correction',
-        component: PostDiff,
+        component: asyncPostDiff,
         props: route => ({
             originalID: parseInt(route.params.postid as string),
             correctionID: parseInt(route.params.corrid as string),
@@ -54,16 +57,16 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/r/menu',
         name: 'Menu',
-        component: GroupListActor,
+        component: asyncGroupListActor,
     },
     {
         path: '/',
-        component: GroupListActor,
+        component: asyncGroupListActor,
     },
     {
         path: '/r/admin',
         name: 'Admin',
-        component: () => import('@/components/admin/Panel.vue'),
+        component: asyncPanel,
     },
 ]
 

@@ -1,10 +1,10 @@
-
 import { defineComponent } from "vue";
 import { check_token, check_login } from "@/api/api";
-import { ElInput, ElLoading } from 'element-plus';
+import { ElInput } from 'element-plus';
+
 export default defineComponent({
     name: "Login",
-    components: { ElInput, ElLoading },
+    components: { ElInput },
     emits: {
         login() {
             return true;
