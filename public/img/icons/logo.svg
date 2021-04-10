@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1000mm"
+   height="1000mm"
+   viewBox="0 0 1000 1000"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/lukas/documents/coding/rust/yuban/client/public/img/icons/logo.png"
+   inkscape:export-xdpi="107.954"
+   inkscape:export-ydpi="107.954">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#521216"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.26972534"
+     inkscape:cx="1702.6378"
+     inkscape:cy="1529.7841"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="2554"
+     inkscape:window-height="1413"
+     inkscape:window-x="1920"
+     inkscape:window-y="21"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#521216;fill-opacity:1;stroke:#1a1a1a;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="path2604"
+       sodipodi:type="arc"
+       sodipodi:cx="500.00006"
+       sodipodi:cy="500.00006"
+       sodipodi:rx="500"
+       sodipodi:ry="500"
+       sodipodi:start="5.9238744"
+       sodipodi:end="5.9235079"
+       sodipodi:open="true"
+       sodipodi:arc-type="arc"
+       d="M 968.06974,324.18545 A 500,500 0 0 1 675.85756,968.05363 500,500 0 0 1 31.962611,675.90045 500,500 0 0 1 324.05679,31.97873 500,500 0 0 1 968.00527,324.01391" />
+    <rect
+       style="fill:#f06d6e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.264583"
+       id="rect1985"
+       width="500"
+       height="230"
+       x="250"
+       y="260"
+       rx="115"
+       ry="0" />
+    <rect
+       style="fill:#6b9235;fill-opacity:1;fill-rule:evenodd;stroke-width:0.274963"
+       id="rect1985-3"
+       width="540"
+       height="230"
+       x="230"
+       y="510"
+       rx="124.2"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:220px;line-height:1.25;font-family:sans-serif;letter-spacing:-26.1081px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.261081"
+       x="495.16479"
+       y="462.9165"
+       id="text1404"
+       transform="scale(1.0039883,0.99602755)"><tspan
+         sodipodi:role="line"
+         id="tspan1402"
+         x="495.16479"
+         y="462.9165"
+         style="font-size:220px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;stroke-width:0.261081"
+         dx="0 -10.000803"
+         dy="0">Yǔ</tspan><tspan
+         sodipodi:role="line"
+         x="495.16479"
+         y="737.91656"
+         style="font-size:220px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;stroke-width:0.261081"
+         id="tspan1975" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:220px;line-height:1.25;font-family:sans-serif;letter-spacing:-26.2488px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.262488"
+       x="307.55621"
+       y="717.2937"
+       id="text1979"
+       transform="scale(1.0093965,0.99069098)"><tspan
+         sodipodi:role="line"
+         id="tspan1977"
+         x="307.55621"
+         y="717.2937"
+         style="font-size:220px;stroke-width:0.262488">Bàn</tspan></text>
+  </g>
+</svg>

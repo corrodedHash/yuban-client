@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { GroupSummary, summarize_groups } from '@/api/api'
-import ThreadList from '@/components/ThreadList.vue'
+import ThreadList from '@/components/menu/ThreadList.vue'
 import { ElTabs, ElTabPane } from 'element-plus';
 export default defineComponent({
     name: 'GroupList',

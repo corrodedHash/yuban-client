@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div v-if="!loggedIn">
-      <login @login="loggedIn = true" />
-    </div>
-    <div v-else>
-      <post-window @logout="loggedIn = false" />
-    </div>
+    <login v-if="!loggedIn" @login="loggedIn = true" />
+    <post-window v-else @logout="loggedIn = false" />
   </div>
 </template>
 
 <script lang="ts" src="./App.ts" />
+<style scoped>
+</style>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -18,5 +16,6 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  height: 100%;
 }
 </style>
