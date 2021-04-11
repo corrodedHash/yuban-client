@@ -36,13 +36,11 @@ export default defineComponent({
         },
         deleteUser(groupname: string, username: string) {
             remove_group_user(groupname, username).then(() => {
-                console.warn('User removed')
                 this.reloadGroups()
             })
         },
         addUser(groupname: string, username: string) {
             add_group_user(groupname, username).then(() => {
-                console.warn('User added')
                 this.reloadGroups()
             })
         },

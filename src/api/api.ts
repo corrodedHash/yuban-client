@@ -13,10 +13,14 @@ export async function logout(): Promise<void> {
     }
 }
 
+export interface UserInfo {
+    username: string
+}
+
 export async function check_login(
     username: string,
     password: string
-): Promise<boolean> {
+): Promise<UserInfo | null> {
     const json_data = JSON.stringify({
         username: username,
         password: password,
@@ -25,20 +29,30 @@ export async function check_login(
     switch (x.status) {
         case 200:
             console.assert(typeof x.response == 'boolean')
-            return x.response
+            const accepted: boolean = x.response
+            if (!accepted) {
+                return null
+            }
+            return { username: username.toLowerCase() }
         default:
             console.warn('Unknown status', x.status, x.response)
             throw undefined
     }
 }
 
-export async function check_token(): Promise<boolean> {
+export interface CheckTokenResponse {
+    username: string
+}
+
+export async function check_token(): Promise<UserInfo | null> {
     const x = await requester.requestPromise('testtoken', { method: 'GET' })
     switch (x.status) {
-        case 202:
-            return true
-        case 401:
-            return false
+        case 200:
+            const user = x.response as CheckTokenResponse | null
+            if (user === null) {
+                return null
+            }
+            return { username: user.username.toLowerCase() }
         default:
             console.warn('Unknown status', x.status, x.response)
             throw undefined

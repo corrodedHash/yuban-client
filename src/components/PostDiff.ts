@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from 'vue'
 import PostDiffDisplay from './PostDiffDisplay.vue'
 import { get_post, add_correction } from '@/api/api'
-import { ElButton } from 'element-plus';
+import { ElButton, ElMessageBox } from 'element-plus';
 export default defineComponent({
     name: 'PostDiff',
     components: { PostDiffDisplay, ElButton },
@@ -29,6 +29,8 @@ export default defineComponent({
                     name: 'Correction',
                     params: { postid: this.originalID, corrid: x },
                 })
+            }).catch(() => {
+                ElMessageBox.alert("Could not add correction", "Warning")
             })
         },
         getPosts() {

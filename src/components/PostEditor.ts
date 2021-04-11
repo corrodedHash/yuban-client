@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from 'vue'
-import { add_thread, get_post, add_post, add_correction } from '@/api/api'
+import { add_thread, get_post, add_post } from '@/api/api'
 import { assertUnreachable } from '@/util'
-import { ElButton } from 'element-plus'
+import { ElButton, ElMessageBox } from 'element-plus'
 
 export default defineComponent({
     name: 'PostEditor',
@@ -15,7 +15,7 @@ export default defineComponent({
         postid: { type: Number },
     },
     data() {
-        return { text: '', textlang: '' }
+        return { text: '', textlang: 'de' }
     },
     mounted() {
         this.handlePostChange()
@@ -61,10 +61,9 @@ export default defineComponent({
             if (!this.isNew) {
                 return
             }
-            let langcode = (this.$refs.langcode as any).value
             switch (this.parenttype) {
                 case 'group':
-                    add_thread(this.parentid, this.text, langcode)
+                    add_thread(this.parentid, this.text, this.textlang)
                         .then(x => {
                             this.$router.push({
                                 name: 'View',
@@ -72,11 +71,11 @@ export default defineComponent({
                             })
                         })
                         .catch(() => {
-                            console.warn('Could not add thread')
+                            ElMessageBox.alert("Error while adding thread", "Warning")
                         })
                     break
                 case 'thread':
-                    add_post(this.parentid, this.text, langcode)
+                    add_post(this.parentid, this.text, this.textlang)
                         .then(x => {
                             this.$router.push({
                                 name: 'View',
@@ -84,7 +83,7 @@ export default defineComponent({
                             })
                         })
                         .catch(() => {
-                            console.warn('Could not add post')
+                            ElMessageBox.alert("Error while adding post", "Warning")
                         })
                     break
                 default:

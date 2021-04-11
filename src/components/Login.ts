@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import { check_token, check_login } from "@/api/api";
+import { check_token, check_login, UserInfo } from "@/api/api";
 import { ElInput } from 'element-plus';
 
 export default defineComponent({
@@ -21,29 +21,29 @@ export default defineComponent({
         this.checkToken();
     },
     methods: {
-        handleLoginPromise(loggedIn: boolean) {
-            if (loggedIn) {
-                this.$emit("login");
-                this.checkedToken = false;
-            } else {
-                this.checkedToken = true;
+        handleLoginPromise(user: UserInfo | null) {
+            if (user === null) {
+                this.checkedToken = true
+                return
             }
+            this.$emit("login")
+            this.checkedToken = false
         },
 
         checkToken() {
             check_token().then(this.handleLoginPromise.bind(this)).catch(() => {
-                this.checkedToken = true;
+                this.checkedToken = true
             })
         },
 
         login() {
             check_login(this.username, this.password)
                 .then(this.handleLoginPromise.bind(this)).catch(() => {
-                    console.error("Login failed miserably");
-                    this.checkedToken = true;
+                    console.error("Login failed miserably")
+                    this.checkedToken = true
                 }).finally(() => {
-                    this.username = "";
-                    this.password = "";
+                    this.username = ""
+                    this.password = ""
                 });
 
         },
