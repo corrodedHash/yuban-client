@@ -1,7 +1,7 @@
 <template>
   <div>
-    <login v-if="!loggedIn" @login="loggedIn = true" />
-    <post-window v-else @logout="loggedIn = false" />
+    <login v-if="user === null" />
+    <post-window v-else />
   </div>
 </template>
 

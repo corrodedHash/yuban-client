@@ -5,11 +5,6 @@ import { ElInput } from 'element-plus';
 export default defineComponent({
     name: "Login",
     components: { ElInput },
-    emits: {
-        login() {
-            return true;
-        },
-    },
     data() {
         return {
             username: "",
@@ -17,16 +12,17 @@ export default defineComponent({
             checkedToken: false,
         };
     },
+    inject: ['user'],
     mounted() {
         this.checkToken();
     },
     methods: {
         handleLoginPromise(user: UserInfo | null) {
+            (this as any).user.value = user
             if (user === null) {
                 this.checkedToken = true
                 return
             }
-            this.$emit("login")
             this.checkedToken = false
         },
 

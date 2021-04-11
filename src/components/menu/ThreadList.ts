@@ -5,11 +5,13 @@ import {
     summarize_threads,
     summarize_posts,
 } from '@/api/api'
-import { ElButton, ElCollapse, ElCollapseItem } from 'element-plus'
+import { ElButton, ElCollapse, ElCollapseItem, ElPopconfirm } from 'element-plus'
+import UserNameDisplay from '@/components/menu/UserNameDisplay.vue'
+
 export default defineComponent({
     name: 'ThreadList',
     props: { groupid: { type: Number, required: true } },
-    components: { ElButton, ElCollapse, ElCollapseItem },
+    components: { ElButton, ElCollapse, ElCollapseItem, UserNameDisplay, ElPopconfirm },
     emits: {
         selectPost(thread_id: number | null, post_id: number | null) {
             return true
@@ -32,7 +34,15 @@ export default defineComponent({
     mounted() {
         this.requestPosts()
     },
+    inject: ['user'],
     methods: {
+        removePost(post_id: number){
+            
+        },
+        userOwned(username: string): boolean {
+            const user = (this as any).user.value
+            return user !== null && user.username === username
+        },
         selectedPost(newPost: string) {
             this.posts = null
             if (newPost == '') {

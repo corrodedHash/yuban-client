@@ -4,5 +4,13 @@ module.exports = {
             navigateFallback: 'index.html'
         }
     },
-    runtimeCompiler: true
+    runtimeCompiler: true,
+    devServer: {
+        compress: true,
+        proxy: {
+            '^/api': {
+                target: 'http://localhost:8000'
+            }
+        }
+    },
 };

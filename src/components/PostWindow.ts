@@ -9,17 +9,16 @@ export default defineComponent({
             return true
         },
     },
+    inject: ['user'],
     methods: {
         openList() {
             this.$router.push({ name: 'Menu' })
         },
         handleLogout() {
             logout()
-                .then(() => this.$emit('logout'))
                 .catch(() => {
-                    this.$emit('logout')
                     console.warn('Could not logout')
-                })
+                }).finally(() => { (this as any).user.value = null })
         },
         handleCorrectionSwitch(
             thread_id: number,

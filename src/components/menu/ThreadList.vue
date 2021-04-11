@@ -46,8 +46,9 @@
             class="postCard"
             @click="handleSelectedPost(thread.id, post)"
           >
-            {{ post.username }} - {{ post.opened_on.toLocaleString() }} -
-            {{ post.lang.toUpperCase() }}<br />{{ post.ellipsis }}...
+            <user-name-display :username="post.username" /> -
+            {{ post.opened_on.toLocaleString() }} - {{ post.lang.toUpperCase()
+            }}<br />{{ post.ellipsis }}...
             <br />
             <el-button
               icon="el-icon-plus"
@@ -55,13 +56,24 @@
               @click.stop="selectNewCorrection(thread.id, post)"
               >Add Correction</el-button
             >
+            <!-- <el-popconfirm
+              v-if="post.username"
+              title="Are you sure to delete this thread?"
+              confirmButtonText="OK"
+              cancelButtonText="No, Thanks"
+              @confirm="removePost(post.id)"
+            >
+              <template #reference>
+                <el-button icon="el-icon-delete" size="mini">aoeu</el-button>
+              </template>
+            </el-popconfirm> -->
             <div
               class="correctionBox"
               v-for="corr in post.corrections"
               :key="corr.id"
               @click.stop="handleSelectedCorrection(thread.id, post, corr.id)"
             >
-              {{ corr.username }} -
+              <user-name-display :username="corr.username" /> -
               {{ corr.postdate.toLocaleString() }}
             </div>
           </div>
