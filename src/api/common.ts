@@ -1,4 +1,4 @@
-export type RequestOptions = { method?: string; type?: XMLHttpRequestResponseType }
+export type RequestOptions = { method?: "DELETE" | "PUT" | "GET" | "POST"; type?: XMLHttpRequestResponseType }
 
 export class RequestPromiser {
     root: string

@@ -7,7 +7,7 @@ export default defineComponent({
   name: "App",
   components: { Login, PostWindow },
   provide() {
-    return { user: computed({ get: () => this.user, set: value => { this.user = value; console.log("set value") } }) }
+    return { user: computed({ get: () => this.user, set: value => { this.user = value } }) }
   },
 
   data() {

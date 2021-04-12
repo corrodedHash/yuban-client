@@ -9,7 +9,7 @@
         @confirm="removeUser(user)"
       >
         <template #reference>
-          <el-button icon="el-icon-delete" size="mini">aoeu</el-button>
+          <el-button icon="el-icon-delete" size="mini">Delete</el-button>
         </template>
       </el-popconfirm>
     </div>

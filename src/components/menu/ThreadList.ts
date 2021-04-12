@@ -4,8 +4,10 @@ import {
     PostSummary,
     summarize_threads,
     summarize_posts,
+    delete_correction,
+    delete_post,
 } from '@/api/api'
-import { ElButton, ElCollapse, ElCollapseItem, ElPopconfirm } from 'element-plus'
+import { ElButton, ElCollapse, ElCollapseItem, ElPopconfirm, ElMessage } from 'element-plus'
 import UserNameDisplay from '@/components/menu/UserNameDisplay.vue'
 
 export default defineComponent({
@@ -30,14 +32,35 @@ export default defineComponent({
             posts: null as PostSummary[] | null,
         }
     },
-    watch: {},
     mounted() {
         this.requestPosts()
     },
     inject: ['user'],
     methods: {
-        removePost(post_id: number){
-            
+        removeCorr(corr_id: number) {
+            delete_correction(corr_id).then(
+                () => {
+                    if (this.posts === null) {
+                        return
+                    }
+                    this.posts = this.posts.map(
+                        v => { v.corrections = v.corrections.filter(x => x.id !== corr_id); return v })
+                }
+            ).catch(() => {
+                ElMessage({ message: 'Could not delete correction', center: true, type: 'error' })
+            })
+        },
+        removePost(post_id: number) {
+            delete_post(post_id).then(
+                () => {
+                    if (this.posts === null) {
+                        return
+                    }
+                    this.posts = this.posts.filter(v => v.id != post_id)
+                }
+            ).catch(() => {
+                ElMessage({ message: 'Could not delete post', center: true, type: 'error' })
+            })
         },
         userOwned(username: string): boolean {
             const user = (this as any).user.value

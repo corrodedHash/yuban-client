@@ -56,17 +56,17 @@
               @click.stop="selectNewCorrection(thread.id, post)"
               >Add Correction</el-button
             >
-            <!-- <el-popconfirm
-              v-if="post.username"
-              title="Are you sure to delete this thread?"
+            <el-popconfirm
+              v-if="user.value !== null && post.username == user.value.username"
+              title="Are you sure to delete this post?"
               confirmButtonText="OK"
               cancelButtonText="No, Thanks"
               @confirm="removePost(post.id)"
             >
               <template #reference>
-                <el-button icon="el-icon-delete" size="mini">aoeu</el-button>
+                <el-button icon="el-icon-delete" size="mini">Delete</el-button>
               </template>
-            </el-popconfirm> -->
+            </el-popconfirm>
             <div
               class="correctionBox"
               v-for="corr in post.corrections"
@@ -75,6 +75,19 @@
             >
               <user-name-display :username="corr.username" /> -
               {{ corr.postdate.toLocaleString() }}
+              <el-popconfirm
+                v-if="
+                  user.value !== null && corr.username == user.value.username
+                "
+                title="Are you sure to delete this correction?"
+                confirmButtonText="OK"
+                cancelButtonText="No, Thanks"
+                @confirm="removeCorr(corr.id)"
+              >
+                <template #reference>
+                  <el-button icon="el-icon-delete" size="mini">Delete</el-button>
+                </template>
+              </el-popconfirm>
             </div>
           </div>
         </div>

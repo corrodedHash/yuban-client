@@ -241,3 +241,49 @@ export async function add_correction(
     console.assert(typeof x.response == 'number')
     return x.response
 }
+
+export async function delete_thread(
+    thread_id: number
+): Promise<void> {
+    const x = await requester.requestPromise(`thread/${thread_id}`, { method: 'DELETE' })
+
+    if (x.status !== 200) {
+        throw undefined
+    }
+
+    console.assert(typeof x.response == 'boolean')
+    if (x.response !== true) {
+        throw Error("Server did not delete")
+    }
+}
+
+
+export async function delete_post(
+    post_id: number
+): Promise<void> {
+    const x = await requester.requestPromise(`post/${post_id}`, { method: 'DELETE' })
+
+    if (x.status !== 200) {
+        throw undefined
+    }
+
+    console.assert(typeof x.response == 'boolean')
+    if (x.response !== true) {
+        throw Error("Server did not delete")
+    }
+}
+
+export async function delete_correction(
+    post_id: number
+): Promise<void> {
+    const x = await requester.requestPromise(`correction/${post_id}`, { method: 'DELETE' })
+
+    if (x.status !== 200) {
+        throw undefined
+    }
+
+    console.assert(typeof x.response == 'boolean')
+    if (x.response !== true) {
+        throw Error("Server did not delete")
+    }
+}

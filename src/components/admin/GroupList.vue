@@ -22,7 +22,7 @@
             >
                 <template #reference>
                     <el-button icon="el-icon-delete" size="mini"
-                        >aoeu</el-button
+                        >Delete</el-button
                     >
                 </template>
             </el-popconfirm>
