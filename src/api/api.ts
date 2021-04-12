@@ -287,3 +287,14 @@ export async function delete_correction(
         throw Error("Server did not delete")
     }
 }
+export async function get_server_version(
+): Promise<string> {
+    const x = await requester.requestPromise(`version`, { method: 'GET' })
+
+    if (x.status !== 200) {
+        throw undefined
+    }
+
+    console.assert(typeof x.response == 'string')
+    return x.response
+}

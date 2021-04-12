@@ -2,6 +2,10 @@
   <div class="appcontainer">
     <login v-if="user === null" />
     <post-window v-else />
+    <div class="versionbox">
+      <div>Client version: {{ client_version }}</div>
+      <div>Server version: {{ server_version }}</div>
+    </div>
   </div>
 </template>
 
@@ -24,5 +28,13 @@ body {
 }
 .appcontainer {
   height: 100%;
+}
+.versionbox {
+  font-size: xx-small;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 5px;
+  padding-bottom: 5px;
 }
 </style>
