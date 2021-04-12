@@ -61,10 +61,17 @@
               title="Are you sure to delete this post?"
               confirmButtonText="OK"
               cancelButtonText="No, Thanks"
+              icon="el-icon-warning"
+              iconColor="crimson"
               @confirm="removePost(post.id)"
             >
               <template #reference>
-                <el-button icon="el-icon-delete" size="mini">Delete</el-button>
+                <el-button
+                  icon="el-icon-delete"
+                  size="small"
+                  type="danger"
+                  circle
+                ></el-button>
               </template>
             </el-popconfirm>
             <div
@@ -82,10 +89,18 @@
                 title="Are you sure to delete this correction?"
                 confirmButtonText="OK"
                 cancelButtonText="No, Thanks"
+                icon="el-icon-warning"
+                iconColor="crimson"
                 @confirm="removeCorr(corr.id)"
               >
                 <template #reference>
-                  <el-button icon="el-icon-delete" size="mini">Delete</el-button>
+                  <el-button
+                    icon="el-icon-delete"
+                    size="mini"
+                    type="danger"
+                    round
+                    >Delete</el-button
+                  >
                 </template>
               </el-popconfirm>
             </div>

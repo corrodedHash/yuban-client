@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="appcontainer">
     <login v-if="user === null" />
     <post-window v-else />
   </div>
@@ -8,7 +8,9 @@
 <script lang="ts" src="./App.ts" />
 
 <style>
-html,
+html {
+  height: 95%;
+}
 body {
   height: 100%;
 }
@@ -18,7 +20,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+.appcontainer {
   height: 100%;
 }
 </style>

@@ -15,7 +15,7 @@ export default defineComponent({
         postid: { type: Number },
     },
     data() {
-        return { text: '', textlang: 'de' }
+        return { text: '', textlang: 'de', showNoteField: false }
     },
     mounted() {
         this.handlePostChange()

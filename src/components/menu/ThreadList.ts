@@ -7,25 +7,13 @@ import {
     delete_correction,
     delete_post,
 } from '@/api/api'
-import { ElButton, ElCollapse, ElCollapseItem, ElPopconfirm, ElMessage } from 'element-plus'
+import { ElIcon, ElButton, ElCollapse, ElCollapseItem, ElPopconfirm, ElMessage, ElPopper } from 'element-plus'
 import UserNameDisplay from '@/components/menu/UserNameDisplay.vue'
 
 export default defineComponent({
     name: 'ThreadList',
     props: { groupid: { type: Number, required: true } },
-    components: { ElButton, ElCollapse, ElCollapseItem, UserNameDisplay, ElPopconfirm },
-    emits: {
-        selectPost(thread_id: number | null, post_id: number | null) {
-            return true
-        },
-        selectCorrection(
-            thread_id: number,
-            post_id: number,
-            corr_id: number | null
-        ) {
-            return true
-        },
-    },
+    components: { ElIcon, ElButton, ElCollapse, ElCollapseItem, ElPopconfirm, ElPopper, UserNameDisplay },
     data() {
         return {
             threads: [] as ThreadSummary[],
