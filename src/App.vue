@@ -3,7 +3,12 @@
     <login v-if="user === null" />
     <post-window v-else />
     <div class="versionbox">
-      <div>Client version: {{ client_version }}</div>
+      <div>
+        Client version: {{ client_version }}
+        <span v-if="update_available" @click="fetchServiceWorkerUpdate()">
+          Update available!
+        </span>
+      </div>
       <div>Server version: {{ server_version }}</div>
     </div>
   </div>

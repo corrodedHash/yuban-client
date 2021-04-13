@@ -1,11 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
+import { registerServiceWorker } from './registerServiceWorker'
 import { ElLoading } from 'element-plus'
 
 import router from './router'
 
-const app = createApp(App)
+let x = registerServiceWorker()
+
+const app = createApp(App, { "update_state": x })
 app.use(router)
 ElLoading.install(app)
 app.mount('#app')
