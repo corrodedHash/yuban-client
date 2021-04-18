@@ -33,26 +33,29 @@
 <script lang="ts" src="./PostEditor.ts" />
 
 <style scoped>
+.editorbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
 .notes {
   height: 30%;
-  margin: 1%;
+  width: 100%;
+  max-width: 75em;
   border-style: none;
   border-width: 0px;
   resize: none;
   background-color: aqua;
 }
-.editorbox {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.buttons {
-  display: block;
-}
 .editor {
   resize: none;
   width: 100%;
+  max-width: 75em;
   background-color: rgb(220, 255, 255);
   flex: 1;
+}
+.buttons {
+  display: block;
 }
 </style>

@@ -198,10 +198,10 @@ export async function add_thread(
     langcode: string
 ): Promise<{ thread_id: number; post_id: number }> {
     const x = await requester.sendPromise(
-        `addthread/${group_id}/${langcode}`,
+        `thread/${group_id}/${langcode}`,
         post,
         {
-            method: 'PUT',
+            method: 'POST',
         }
     )
     if (x.status !== 200) {
@@ -216,10 +216,10 @@ export async function add_post(
     langcode: string
 ): Promise<number> {
     const x = await requester.sendPromise(
-        `addpost/${thread_id}/${langcode}`,
+        `post/${thread_id}/${langcode}`,
         post,
         {
-            method: 'PUT',
+            method: 'POST',
         }
     )
     console.assert(typeof x.response == 'number')
@@ -230,8 +230,8 @@ export async function add_correction(
     post: string,
     orig_id: number
 ): Promise<number> {
-    const x = await requester.sendPromise(`addcorrection/${orig_id}`, post, {
-        method: 'PUT',
+    const x = await requester.sendPromise(`correction/${orig_id}`, post, {
+        method: 'POST',
     })
 
     if (x.status !== 200) {
